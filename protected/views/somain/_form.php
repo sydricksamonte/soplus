@@ -28,7 +28,6 @@
             <?php echo 'Date Placed: '.$form->labelEx($model,'DatePlaced',array('label'=>$dd)); ?>
             <?php echo $form->hiddenField($model,'DatePlaced', array('value'=>date('Y-m-d H:i:s'))); ?>
 			<?php echo $form->error($model,'DatePlaced'); ?>
-		</div>
 	</div>
     <br/><br/>
     <div style="border:1px solid green; width:65%;padding:2px;" align="right">
