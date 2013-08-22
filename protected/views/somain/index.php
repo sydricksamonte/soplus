@@ -7,12 +7,12 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'Create Somain', 'url'=>array('create')),
-	array('label'=>'Manage Somain', 'url'=>array('admin')),
+	array('label'=>'Create Entries', 'url'=>array('create')),
+	array('label'=>'Manage Entries', 'url'=>array('admin')),
 );
 ?>
 
-<h1>Somains</h1>
+<h1>Entries</h1>
 
 <?php $this->widget('zii.widgets.CListView', array(
 	'dataProvider'=>$dataProvider,

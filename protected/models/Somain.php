@@ -76,7 +76,8 @@ class Somain extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('Faxed, Emailed, ForApproval, Cancelled, Delilvered, PickedUp, FaxedAsFA, FA_RGB, FA_Other1, FA_Other2', 'numerical', 'integerOnly'=>true),
+            array('Customer, ContactPerson', 'required'),
+			array('TelNo', 'numerical'),
 			array('DocNo, UserID, Approved, ApprovedBy, FANo', 'length', 'max'=>10),
 			array('Customer, ContactPerson', 'length', 'max'=>75),
 			array('Terms, PayMode', 'length', 'max'=>35),
@@ -88,10 +89,11 @@ class Somain extends CActiveRecord
 			array('PODetails', 'length', 'max'=>100),
 			array('DeliverTo', 'length', 'max'=>250),
 			array('RefDocNo, RefInvDtr', 'length', 'max'=>45),
+  
 			array('DatePlaced, Instruction, IssueDte, CancelDateFax, ApprovedDateTime, DateSubmitted', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('DocNo, DatePlaced, UserID, Customer, ContactPerson, Terms, PayMode, DeliverDte, AcctOf1, AcctOf2, Instruction, IssueDte, Address, TelNo, Approved, Faxed, Emailed, ForApproval, Classification, ApprovedBy, DRPeriod, Remarks, PODetails, Cancelled, CancelReason, CancelDateFax, Currency, DeliverTo, Delilvered, FANo, ApprovedDateTime, PickedUp, FaxedAsFA, Field1, Field2, Field3, Field4, FA_RGB, FA_Other1, FA_Other2, RefDocNo, RefInvDtr, DateSubmitted', 'safe', 'on'=>'search'),
+			array('DocNo, DatePlaced, UserID, Customer, ContactPerson, Terms, PayMode, DeliverDte, AcctOf1, AcctOf2, Instruction, IssueDte, Address, TelNo, DateSubmitted', 'safe', 'on'=>'search'),
 		);
 	}
 

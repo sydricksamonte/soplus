@@ -66,7 +66,8 @@ class SomainController extends Controller
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
-
+        print_r($_POST);
+        //die();
 		if(isset($_POST['Somain']))
 		{
 			$model->attributes=$_POST['Somain'];
