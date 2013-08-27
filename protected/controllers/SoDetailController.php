@@ -6,7 +6,7 @@ class SoDetailController extends Controller
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
 	 * using two-column layout. See 'protected/views/layouts/column2.php'.
 	 */
-	public $layout='//layouts/column2';
+	public $layout='//layouts/column3';
 
 	/**
 	 * @return array action filters
@@ -70,8 +70,10 @@ class SoDetailController extends Controller
 		if(isset($_POST['SoDetail']))
 		{
 			$model->attributes=$_POST['SoDetail'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->DetailNo));
+			if($model->save()){
+		        $this->redirect(array('view','id'=>$model->DetailNo));
+			}
+				
 		}
 
 		$this->render('create',array(

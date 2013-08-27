@@ -109,3 +109,6 @@
 	*/ ?>
 
 </div>
+<script>
+    window.close();
+</script>

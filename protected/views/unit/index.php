@@ -1,18 +1,18 @@
 <?php
-/* @var $this SoDetailController */
+/* @var $this UnitController */
 /* @var $dataProvider CActiveDataProvider */
 
 $this->breadcrumbs=array(
-	'So Details',
+	'Units',
 );
 
 $this->menu=array(
-	array('label'=>'Create Items', 'url'=>array('create')),
-	array('label'=>'Manage Items', 'url'=>array('admin')),
+	array('label'=>'Create Unit', 'url'=>array('create')),
+	array('label'=>'Manage Unit', 'url'=>array('admin')),
 );
 ?>
 
-<h1>Item Details</h1>
+<h1>Units</h1>
 
 <?php $this->widget('zii.widgets.CListView', array(
 	'dataProvider'=>$dataProvider,

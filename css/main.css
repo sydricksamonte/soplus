@@ -82,8 +82,8 @@ input[type="password"]:focus {
 #main-wrapper
 {
   background: url(../img/header_bottom.png) repeat-y;
-  margin-top: 65px;
-  padding-top: 45px;
+  margin-top: 15px;
+  padding-top: 35px;
 }
 
 #main
@@ -458,3 +458,6 @@ div.search-form
   color: rgba(0, 0, 0, 0.5);
   outline: 0;
 }
+
+
+

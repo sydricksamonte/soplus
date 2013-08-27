@@ -9,13 +9,13 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'List SoDetail', 'url'=>array('index')),
-	array('label'=>'Create SoDetail', 'url'=>array('create')),
-	array('label'=>'View SoDetail', 'url'=>array('view', 'id'=>$model->DetailNo)),
-	array('label'=>'Manage SoDetail', 'url'=>array('admin')),
+	array('label'=>'List Items', 'url'=>array('index')),
+	array('label'=>'Create Item', 'url'=>array('create')),
+	array('label'=>'View Item', 'url'=>array('view', 'id'=>$model->DetailNo)),
+	array('label'=>'Manage Items', 'url'=>array('admin')),
 );
 ?>
 
-<h1>Update SoDetail <?php echo $model->DetailNo; ?></h1>
+<h1>Update Item <?php echo $model->DetailNo; ?></h1>
 
-<?php echo $this->renderPartial('_form', array('model'=>$model)); ?>
+<?php echo $this->renderPartial('_formup', array('model'=>$model)); ?>

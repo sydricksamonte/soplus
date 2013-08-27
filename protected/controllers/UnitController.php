@@ -1,6 +1,6 @@
 <?php
 
-class SomainController extends Controller
+class UnitController extends Controller
 {
 	/**
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -62,22 +62,16 @@ class SomainController extends Controller
 	 */
 	public function actionCreate()
 	{
-		$model =new Somain;
-        $mod  = new SoDetail;
+		$model=new Unit;
+
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
-        if(isset($_POST['SoDetail']))
+
+		if(isset($_POST['Unit']))
 		{
-			$mod->attributes=$_POST['SoDetail'];
-			if($mod->save())
-                {}
-				//$this->redirect(array('view','id'=>$mod->DocNo));
-		}
-		if(isset($_POST['Somain']))
-		{
-			$model->attributes=$_POST['Somain'];
+			$model->attributes=$_POST['Unit'];
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->DocNo));
+				$this->redirect(array('view','id'=>$model->id));
 		}
 
 		$this->render('create',array(
@@ -97,11 +91,11 @@ class SomainController extends Controller
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['Somain']))
+		if(isset($_POST['Unit']))
 		{
-			$model->attributes=$_POST['Somain'];
+			$model->attributes=$_POST['Unit'];
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->DocNo));
+				$this->redirect(array('view','id'=>$model->id));
 		}
 
 		$this->render('update',array(
@@ -128,7 +122,7 @@ class SomainController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('Somain');
+		$dataProvider=new CActiveDataProvider('Unit');
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
 		));
@@ -139,10 +133,10 @@ class SomainController extends Controller
 	 */
 	public function actionAdmin()
 	{
-		$model=new Somain('search');
+		$model=new Unit('search');
 		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['Somain']))
-			$model->attributes=$_GET['Somain'];
+		if(isset($_GET['Unit']))
+			$model->attributes=$_GET['Unit'];
 
 		$this->render('admin',array(
 			'model'=>$model,
@@ -153,12 +147,12 @@ class SomainController extends Controller
 	 * Returns the data model based on the primary key given in the GET variable.
 	 * If the data model is not found, an HTTP exception will be raised.
 	 * @param integer $id the ID of the model to be loaded
-	 * @return Somain the loaded model
+	 * @return Unit the loaded model
 	 * @throws CHttpException
 	 */
 	public function loadModel($id)
 	{
-		$model=Somain::model()->findByPk($id);
+		$model=Unit::model()->findByPk($id);
 		if($model===null)
 			throw new CHttpException(404,'The requested page does not exist.');
 		return $model;
@@ -166,11 +160,11 @@ class SomainController extends Controller
 
 	/**
 	 * Performs the AJAX validation.
-	 * @param Somain $model the model to be validated
+	 * @param Unit $model the model to be validated
 	 */
 	protected function performAjaxValidation($model)
 	{
-		if(isset($_POST['ajax']) && $_POST['ajax']==='somain-form')
+		if(isset($_POST['ajax']) && $_POST['ajax']==='unit-form')
 		{
 			echo CActiveForm::validate($model);
 			Yii::app()->end();

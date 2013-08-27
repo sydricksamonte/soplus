@@ -4,12 +4,13 @@
 /* @var $form CActiveForm */
 ?>
 
-<div class="form">
+<div class="form" id="Itm">
 
 <?php $form=$this->beginWidget('CActiveForm', array(
 	'id'=>'so-detail-form',
 	'enableAjaxValidation'=>false,
-)); ?>
+    
+)); $message = '';?>
 	<?php echo $form->errorSummary($model); ?>
 
 	<div class="row">  
@@ -168,8 +169,7 @@
 		<?php echo $form->error($model,'partNo'); ?>
 	</div> -->
 
-    <a href="javascript: window.parent.closeIframe()">Close</a>
-  
+ 
 	<div class="row buttons">
 		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save',array('id'=>'test')); ?>
 	</div>
@@ -177,13 +177,3 @@
 <?php $this->endWidget(); ?>
     <div id="fade"></div>
 </div><!-- form -->
-  <script language="JavaScript">
-
-       
-        function closeIframe()
-        {
-            var element = document.getElementById("ins");
-            element.style.display = 'none';
-        }
-
-</script>

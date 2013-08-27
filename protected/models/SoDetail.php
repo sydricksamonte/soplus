@@ -32,6 +32,7 @@
  */
 class SoDetail extends CActiveRecord
 {
+ 
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
@@ -58,6 +59,7 @@ class SoDetail extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
+            array('Qty, UnitMeas, ItemDesc ,War_Parts, War_Labor, War_Onsite', 'required'),
 			array('chngePrice, bold', 'numerical', 'integerOnly'=>true),
 			array('Qty, UnitPrice, FullComm', 'numerical'),
 			array('DocNo, UnitMeas, InvoiceNo, Lexmark', 'length', 'max'=>10),
@@ -66,7 +68,7 @@ class SoDetail extends CActiveRecord
 			array('War_Parts, War_Labor, War_Onsite', 'length', 'max'=>40),
 			array('TransactionNo', 'length', 'max'=>5),
 			array('partNo', 'length', 'max'=>45),
-			array('ItemDesc, InvoiceDte, PORemarks', 'safe'),
+			#array('ItemDesc, InvoiceDte, PORemarks', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('DetailNo, DocNo, Qty, UnitMeas, ItemDesc, CurSign, UnitPrice, InvoiceNo, InvoiceDte, PORemarks, FullComm, CommB, CommC, War_Parts, War_Labor, War_Onsite, TransactionNo, Lexmark, Field1, Field2, Field3, Field4, chngePrice, partNo, bold', 'safe', 'on'=>'search'),
@@ -92,20 +94,20 @@ class SoDetail extends CActiveRecord
 		return array(
 			'DetailNo' => 'Detail No',
 			'DocNo' => 'Doc No',
-			'Qty' => 'Qty',
-			'UnitMeas' => 'Unit Meas',
-			'ItemDesc' => 'Item Desc',
-			'CurSign' => 'Cur Sign',
+			'Qty' => 'Quantity',
+			'UnitMeas' => 'Unit Measurement',
+			'ItemDesc' => 'Item Description',
+			'CurSign' => 'Currency Sign',
 			'UnitPrice' => 'Unit Price',
+            'War_Parts' => 'Warranty Parts',
+			'War_Labor' => 'Warranty Labor',
+			'War_Onsite' => 'Warranty Onsite',
 			'InvoiceNo' => 'Invoice No',
 			'InvoiceDte' => 'Invoice Dte',
 			'PORemarks' => 'Poremarks',
-			'FullComm' => 'Full Comm',
+			'FullComm' => 'Commission',
 			'CommB' => 'Comm B',
 			'CommC' => 'Comm C',
-			'War_Parts' => 'War Parts',
-			'War_Labor' => 'War Labor',
-			'War_Onsite' => 'War Onsite',
 			'TransactionNo' => 'Transaction No',
 			'Lexmark' => 'Lexmark',
 			'Field1' => 'Field1',
