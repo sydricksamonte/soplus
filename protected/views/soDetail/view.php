@@ -8,11 +8,9 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'List SoDetail', 'url'=>array('index')),
-	array('label'=>'Create SoDetail', 'url'=>array('create')),
-	array('label'=>'Update SoDetail', 'url'=>array('update', 'id'=>$model->DetailNo)),
-	array('label'=>'Delete SoDetail', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->DetailNo),'confirm'=>'Are you sure you want to delete this item?')),
-	array('label'=>'Manage SoDetail', 'url'=>array('admin')),
+
+	array('label'=>'Update Item', 'url'=>array('update', 'id'=>$model->DetailNo)),
+	array('label'=>'Delete Item', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->DetailNo),'confirm'=>'Are you sure you want to delete this item?')),
 );
 ?>
 
@@ -28,22 +26,22 @@ $this->menu=array(
 		'ItemDesc',
 		'CurSign',
 		'UnitPrice',
-		'InvoiceNo',
-		'InvoiceDte',
-		'PORemarks',
+	#	'InvoiceNo',
+	#	'InvoiceDte',
+	#	'PORemarks',
 		'FullComm',
-		'CommB',
-		'CommC',
+	#	'CommB',
+	#	'CommC',
 		'War_Parts',
 		'War_Labor',
 		'War_Onsite',
 		'TransactionNo',
-		'Lexmark',
-		'Field1',
-		'Field2',
-		'Field3',
-		'Field4',
-		'chngePrice',
+	#	'Lexmark',
+	#	'Field1',
+	#	'Field2',
+	#	'Field3',
+	#	'Field4',
+	#	'chngePrice',
 		'partNo',
 		'bold',
 	),

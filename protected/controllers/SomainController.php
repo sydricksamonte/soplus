@@ -62,24 +62,30 @@ class SomainController extends Controller
 	 */
 	public function actionCreate()
 	{
+    
 		$model =new Somain;
-        $mod  = new SoDetail;
 		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
-        if(isset($_POST['SoDetail']))
-		{
-			$mod->attributes=$_POST['SoDetail'];
-			if($mod->save())
-                {}
-				//$this->redirect(array('view','id'=>$mod->DocNo));
-		}
+        $this->performAjaxValidation($model);
+      
 		if(isset($_POST['Somain']))
 		{
+            
 			$model->attributes=$_POST['Somain'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->DocNo));
+            $count = $model->countAllDocNoPattern($model->DocNo);
+            $count1 = sprintf('%04d', $count); 
+            $newDocNo = $model->DocNo .'-'.$count1;
+            $model->setAttribute('DocNo',$newDocNo);
+            die($newDocNo);
+			if($model->save()){
+			    $this->redirect(array('update','id'=>$model->DocNo));
+			}
+            else {
+                var_dump( $model->errors );
+            }
+				
 		}
 
+        $this->layout = 'column2';
 		$this->render('create',array(
 			'model'=>$model,
 		));
@@ -93,6 +99,19 @@ class SomainController extends Controller
 	public function actionUpdate($id)
 	{
 		$model=$this->loadModel($id);
+        $mod  = new SoDetail;
+		// Uncomment the following line if AJAX validation is needed
+		 $this->performAjaxValidation($mod);
+        if(isset($_POST['SoDetail']))
+		{
+           
+			$mod->attributes=$_POST['SoDetail'];
+            if($mod->save())
+            {
+                     
+            }
+		}
+
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
@@ -100,8 +119,8 @@ class SomainController extends Controller
 		if(isset($_POST['Somain']))
 		{
 			$model->attributes=$_POST['Somain'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->DocNo));
+			if($model->save()){}
+				#$this->redirect(array('view','id'=>$model->DocNo));
 		}
 
 		$this->render('update',array(
@@ -171,6 +190,11 @@ class SomainController extends Controller
 	protected function performAjaxValidation($model)
 	{
 		if(isset($_POST['ajax']) && $_POST['ajax']==='somain-form')
+		{
+			echo CActiveForm::validate($model);
+			Yii::app()->end();
+		}
+        elseif (isset($_POST['ajax']) && $_POST['ajax']==='so-detail-form')
 		{
 			echo CActiveForm::validate($model);
 			Yii::app()->end();

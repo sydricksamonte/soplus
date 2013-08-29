@@ -11,17 +11,13 @@
 	'enableAjaxValidation'=>false,
 )); ?>
 
-	<p class="note">Fields with <span class="required">*</span> are required.</p>
-
-	<?php echo $form->errorSummary($model); ?>
-
 	<div class="row">
 		<?php echo $form->labelEx($model,'DocNo'); ?>
 		<?php echo $form->textField($model,'DocNo',array('size'=>10,'maxlength'=>10)); ?>
 		<?php echo $form->error($model,'DocNo'); ?>
 	</div>
 
-	<div class="row">
+	<div class="column">
 		<?php echo $form->labelEx($model,'Qty'); ?>
 		<?php echo $form->textField($model,'Qty'); ?>
 		<?php echo $form->error($model,'Qty'); ?>
@@ -31,7 +27,7 @@
 		<?php echo $form->labelEx($model,'UnitMeas'); ?>
         <?php
             $records = Unit::model()->findAll();
-            $list = CHtml::listData($records, 'id', 'name');
+            $list = CHtml::listData($records, 'name', 'name');
             echo $form->dropDownList($model,'UnitMeas', $list, array('empty' => '(Select Unit)'));
         ?>
 		<?php echo $form->error($model,'UnitMeas'); ?>
@@ -48,32 +44,32 @@
 		<?php echo $form->error($model,'bold'); ?>
 	</div>
 
-	<div class="row">
+	<div class="column">
 		<?php echo $form->labelEx($model,'Warranty Parts'); ?>
-		<?php echo $form->textField($model,'War_Parts',array('size'=>40,'maxlength'=>40)); ?>
+		<?php echo $form->textField($model,'War_Parts',array('size'=>20,'maxlength'=>40)); ?>
 		<?php echo $form->error($model,'War_Parts'); ?>
 	</div>
 
-	<div class="row">
+	<div class="column">
 		<?php echo $form->labelEx($model,'Warranty Labor'); ?>
-		<?php echo $form->textField($model,'War_Labor',array('size'=>40,'maxlength'=>40)); ?>
+		<?php echo $form->textField($model,'War_Labor',array('size'=>20,'maxlength'=>40)); ?>
 		<?php echo $form->error($model,'War_Labor'); ?>
 	</div>
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'Warranty Onsite'); ?>
-		<?php echo $form->textField($model,'War_Onsite',array('size'=>40,'maxlength'=>40)); ?>
+		<?php echo $form->textField($model,'War_Onsite',array('size'=>10,'maxlength'=>40)); ?>
 		<?php echo $form->error($model,'War_Onsite'); ?>
 	</div>
     
     
-    <div class="row">
+    <div class="column">
 		<?php echo $form->labelEx($model,'CurSign'); ?>
 		<?php echo $form->dropDownList($model,'CurSign', array('PhP'=>'Php','US$'=>'Usd'), array('empty' => '(Select Unit)')); ?>
 		<?php echo $form->error($model,'CurSign'); ?>
 	</div>
 
-	<div class="row">
+	<div class="column">
 		<?php echo $form->labelEx($model,'UnitPrice'); ?>
 		<?php echo $form->textField($model,'UnitPrice'); ?>
 		<?php echo $form->error($model,'UnitPrice'); ?>
@@ -81,7 +77,7 @@
 
     <div class="row">
 		<?php echo $form->labelEx($model,'Commission'); ?>
-		<?php echo $form->textField($model,'FullComm'); ?>
+		<?php echo $form->textField($model,'FullComm',array('size'=>18,'maxlength'=>40)); ?>
 		<?php echo $form->error($model,'FullComm'); ?>
 	</div>
 

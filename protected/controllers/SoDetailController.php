@@ -88,6 +88,7 @@ class SoDetailController extends Controller
 	 */
 	public function actionUpdate($id)
 	{
+        $this->layout = 'column4';
 		$model=$this->loadModel($id);
 
 		// Uncomment the following line if AJAX validation is needed
@@ -124,6 +125,7 @@ class SoDetailController extends Controller
 	 */
 	public function actionIndex()
 	{
+        $this->layout = 'column2';
 		$dataProvider=new CActiveDataProvider('SoDetail');
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
@@ -135,6 +137,7 @@ class SoDetailController extends Controller
 	 */
 	public function actionAdmin()
 	{
+        $this->layout = 'column2';
 		$model=new SoDetail('search');
 		$model->unsetAttributes();  // clear any default values
 		if(isset($_GET['SoDetail']))
@@ -154,6 +157,7 @@ class SoDetailController extends Controller
 	 */
 	public function loadModel($id)
 	{
+        $this->layout = 'column2';
 		$model=SoDetail::model()->findByPk($id);
 		if($model===null)
 			throw new CHttpException(404,'The requested page does not exist.');

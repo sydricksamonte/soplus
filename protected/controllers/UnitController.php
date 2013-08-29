@@ -71,7 +71,7 @@ class UnitController extends Controller
 		{
 			$model->attributes=$_POST['Unit'];
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
+				$this->redirect(array('view','id'=>$model->name));
 		}
 
 		$this->render('create',array(
@@ -95,7 +95,7 @@ class UnitController extends Controller
 		{
 			$model->attributes=$_POST['Unit'];
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
+				$this->redirect(array('view','id'=>$model->name));
 		}
 
 		$this->render('update',array(

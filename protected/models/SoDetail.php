@@ -59,7 +59,7 @@ class SoDetail extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-            array('Qty, UnitMeas, ItemDesc ,War_Parts, War_Labor, War_Onsite', 'required'),
+            array('Qty, War_Parts, War_Labor, War_Onsite, DocNo, UnitMeas, ItemDesc,', 'required'),
 			array('chngePrice, bold', 'numerical', 'integerOnly'=>true),
 			array('Qty, UnitPrice, FullComm', 'numerical'),
 			array('DocNo, UnitMeas, InvoiceNo, Lexmark', 'length', 'max'=>10),
@@ -157,6 +157,17 @@ class SoDetail extends CActiveRecord
 		$criteria->compare('partNo',$this->partNo,true);
 		$criteria->compare('bold',$this->bold);
 
+		return new CActiveDataProvider($this, array(
+			'criteria'=>$criteria,
+		));
+	}
+    public function getAllRelDocNo($dn)
+	{
+
+		$criteria=new CDbCriteria;
+
+		$criteria->compare('DocNo',$dn);
+		
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));

@@ -76,9 +76,9 @@ class Somain extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-            array('Customer, ContactPerson', 'required'),
+            array('Classification, DocNo', 'required'),
 			array('TelNo', 'numerical'),
-			array('DocNo, UserID, Approved, ApprovedBy, FANo', 'length', 'max'=>10),
+			array('DocNo, UserID, Approved, ApprovedBy, FANo', 'length', 'max'=>20),
 			array('Customer, ContactPerson', 'length', 'max'=>75),
 			array('Terms, PayMode', 'length', 'max'=>35),
 			array('DeliverDte, TelNo, DRPeriod, Field1, Field2, Field3, Field4', 'length', 'max'=>50),
@@ -89,8 +89,7 @@ class Somain extends CActiveRecord
 			array('PODetails', 'length', 'max'=>100),
 			array('DeliverTo', 'length', 'max'=>250),
 			array('RefDocNo, RefInvDtr', 'length', 'max'=>45),
-  
-			array('DatePlaced, Instruction, IssueDte, CancelDateFax, ApprovedDateTime, DateSubmitted', 'safe'),
+			array('DocNo, DatePlaced, Instruction, IssueDte, CancelDateFax, ApprovedDateTime, DateSubmitted', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('DocNo, DatePlaced, UserID, Customer, ContactPerson, Terms, PayMode, DeliverDte, AcctOf1, AcctOf2, Instruction, IssueDte, Address, TelNo, DateSubmitted', 'safe', 'on'=>'search'),
@@ -218,5 +217,14 @@ class Somain extends CActiveRecord
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
+	}
+    public function countAllDocNoPattern($dn)
+	{
+		$sql = "SELECT DocNo FROM somain WHERE DocNo LIKE '".$dn."%' ORDER BY DocNo DESC";
+        $numPattern = Yii::app()->db->createCommand($sql)->queryScalar();
+        $newstring = substr($numPattern, -4);
+        #die(($newstring + 1));
+        var_dump($numPattern);
+		return $numPattern;
 	}
 }
