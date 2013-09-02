@@ -9,7 +9,7 @@ $this->breadcrumbs=array(
 
 $this->menu=array(
 	array('label'=>'List Entries', 'url'=>array('index')),
-	array('label'=>'Create Entries', 'url'=>array('create')),
+	array('label'=>'Create Entry', 'url'=>array('create')),
 );
 
 Yii::app()->clientScript->registerScript('search', "
@@ -42,15 +42,17 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 
 <?php $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'somain-grid',
-	'dataProvider'=>$model->search(),
+	'dataProvider'=>$model->getAllRelToUser(Yii::app()->user->id),
 	'filter'=>$model,
 	'columns'=>array(
 		'DocNo',
 		'DatePlaced',
-		'UserID',
+        'Classification',
+		#'UserID',
 		'Customer',
-		'ContactPerson',
-		'Terms',
+		#'ContactPerson',
+        'ApprovedDateTime',
+		#'Terms',
 		/*
 		'PayMode',
 		'DeliverDte',

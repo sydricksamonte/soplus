@@ -89,7 +89,7 @@ class Somain extends CActiveRecord
 			array('PODetails', 'length', 'max'=>100),
 			array('DeliverTo', 'length', 'max'=>250),
 			array('RefDocNo, RefInvDtr', 'length', 'max'=>45),
-			array('DocNo, DatePlaced, Instruction, IssueDte, CancelDateFax, ApprovedDateTime, DateSubmitted', 'safe'),
+			array('DocNo, DatePlaced,ForApproval, Instruction, IssueDte, CancelDateFax, ApprovedDateTime, DateSubmitted', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('DocNo, DatePlaced, UserID, Customer, ContactPerson, Terms, PayMode, DeliverDte, AcctOf1, AcctOf2, Instruction, IssueDte, Address, TelNo, DateSubmitted', 'safe', 'on'=>'search'),
@@ -121,8 +121,8 @@ class Somain extends CActiveRecord
 			'Terms' => 'Terms',
 			'PayMode' => 'Pay Mode',
 			'DeliverDte' => 'Deliver Dte',
-			'AcctOf1' => 'Acct Of1',
-			'AcctOf2' => 'Acct Of2',
+			'AcctOf1' => 'Account Of',
+			'AcctOf2' => 'If not Account of User, this is for',
 			'Instruction' => 'Instruction',
 			'IssueDte' => 'Issue Dte',
 			'Address' => 'Address',
@@ -223,8 +223,49 @@ class Somain extends CActiveRecord
 		$sql = "SELECT DocNo FROM somain WHERE DocNo LIKE '".$dn."%' ORDER BY DocNo DESC";
         $numPattern = Yii::app()->db->createCommand($sql)->queryScalar();
         $newstring = substr($numPattern, -4);
-        #die(($newstring + 1));
-        var_dump($numPattern);
-		return $numPattern;
+        $a = 1;
+        $b = $newstring;
+        $z = $a + $b;
+		return $z;
+	}
+    public function getAllRelToUser($id)
+	{
+		$criteria=new CDbCriteria;
+		$criteria->compare('UserID',$id);
+        $criteria->compare('DocNo',$this->DocNo,true);
+		$criteria->compare('DatePlaced',$this->DatePlaced,true);
+		$criteria->compare('UserID',$this->UserID,true);
+		$criteria->compare('Customer',$this->Customer,true);
+		$criteria->compare('ContactPerson',$this->ContactPerson,true);
+		$criteria->compare('Terms',$this->Terms,true);
+		$criteria->compare('DeliverDte',$this->DeliverDte,true);
+		$criteria->compare('Instruction',$this->Instruction,true);
+		$criteria->compare('IssueDte',$this->IssueDte,true);
+		return new CActiveDataProvider($this, array(
+			'criteria'=>$criteria,
+		));
+	}
+     public function createUrl($dataObject)
+    {
+                // use security manager to encrypt 
+                $security = Yii::app()->getSecurityManager();
+                $encryptedProperty = $security->encrypt( $dataObject->property,  $user->someKey );
+                $utf8Property = utf8_encode($encryptedProperty);
+                $property = $utf8Property;
+                
+                // build url
+                $route = implode(UserModule::module()->activateUrl);
+                $params = array(
+                        'property'=>$property,
+                        'someKey'=>$someKey,
+                );
+                return $this->createAbsoluteUrl($route, $params);
+    }
+      public function getUserOfSpecDocNo($id)
+	{
+		$sql = "SELECT UserID FROM somain WHERE DocNo = '".$id."' LIMIT 1";
+        $result = Yii::app()->db->createCommand($sql)->queryScalar();
+        
+		return $result;
 	}
 }

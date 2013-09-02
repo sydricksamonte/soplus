@@ -51,12 +51,11 @@ return array(
         ),
 		'user'=>array(
 			// enable cookie-based authentication
-			'allowAutoLogin'=>true,
+			'allowAutoLogin'=>false,
 
 	               // enable cookie-based authentication
-			'class' => 'WebUser',
-			'allowAutoLogin'=>true,
-			'loginUrl' => array('/user/login'),
+			//'class' => 'WebUser',
+			//'loginUrl' => array('/user/login'),
 			),
 		'authManager'=>array(
 			'class'=>'RDbAuthManager',
@@ -93,6 +92,15 @@ return array(
             'enableParamLogging'=>true,
 
 		),
+        'dbadvert' => array(
+            'connectionString' => 'mysql:host=localhost;dbname=opp',
+            'username'         => 'root',
+            'password'         => 'creative',
+            'charset' => 'utf8',
+            'enableProfiling'=>true,
+            'enableParamLogging'=>true,
+            'class'            => 'CDbConnection'          // DO NOT FORGET THIS!
+        ),
 		
 		'errorHandler'=>array(
 			// use 'site/error' action to display errors

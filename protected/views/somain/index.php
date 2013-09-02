@@ -14,7 +14,9 @@ $this->menu=array(
 
 <h1>Entries</h1>
 
-<?php $this->widget('zii.widgets.CListView', array(
-	'dataProvider'=>$dataProvider,
+<?php 
+ $model = new Somain;
+ $this->widget('zii.widgets.CListView', array(
+	'dataProvider'=>$model->getAllRelToUser(Yii::app()->user->Emp_Code),
 	'itemView'=>'_view',
 )); ?>

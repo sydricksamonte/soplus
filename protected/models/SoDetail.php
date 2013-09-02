@@ -62,7 +62,8 @@ class SoDetail extends CActiveRecord
             array('Qty, War_Parts, War_Labor, War_Onsite, DocNo, UnitMeas, ItemDesc,', 'required'),
 			array('chngePrice, bold', 'numerical', 'integerOnly'=>true),
 			array('Qty, UnitPrice, FullComm', 'numerical'),
-			array('DocNo, UnitMeas, InvoiceNo, Lexmark', 'length', 'max'=>10),
+			array('UnitMeas, InvoiceNo, Lexmark', 'length', 'max'=>10),
+            array('DocNo', 'length', 'max'=>12),
 			array('CurSign', 'length', 'max'=>3),
 			array('CommB, CommC, Field1, Field2, Field3, Field4', 'length', 'max'=>50),
 			array('War_Parts, War_Labor, War_Onsite', 'length', 'max'=>40),
@@ -71,7 +72,7 @@ class SoDetail extends CActiveRecord
 			#array('ItemDesc, InvoiceDte, PORemarks', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('DetailNo, DocNo, Qty, UnitMeas, ItemDesc, CurSign, UnitPrice, InvoiceNo, InvoiceDte, PORemarks, FullComm, CommB, CommC, War_Parts, War_Labor, War_Onsite, TransactionNo, Lexmark, Field1, Field2, Field3, Field4, chngePrice, partNo, bold', 'safe', 'on'=>'search'),
+			array('DetailNo, DocNo, Qty, UnitMeas, ItemDesc, CurSign, UnitPrice, bold', 'safe', 'on'=>'search'),
 		);
 	}
 

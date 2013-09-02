@@ -12,8 +12,9 @@
 )); ?>
 
 	<div class="row">
+       
 		<?php echo $form->labelEx($model,'DocNo'); ?>
-		<?php echo $form->textField($model,'DocNo',array('size'=>10,'maxlength'=>10)); ?>
+		<?php echo $form->labelEx($model,'DocNo',array('label'=>$model->DocNo)); ?>
 		<?php echo $form->error($model,'DocNo'); ?>
 	</div>
 

@@ -13,6 +13,6 @@ $this->menu=array(
 );
 ?>
 
-<h1>Update Item <?php echo $model->DetailNo; ?></h1>
+<h1>Update Item '<?php echo $model->ItemDesc; ?>'</h1>
 
 <?php echo $this->renderPartial('_formup', array('model'=>$model,'id'=>'43')); ?>

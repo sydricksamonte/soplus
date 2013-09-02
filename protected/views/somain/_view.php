@@ -25,12 +25,28 @@
 	<?php echo CHtml::encode($data->ContactPerson); ?>
 	<br />
 
+    <b><?php echo CHtml::encode($data->getAttributeLabel('Address')); ?>:</b>
+	<?php echo CHtml::encode($data->Address); ?>
+	<br />
+
+	<b><?php echo CHtml::encode($data->getAttributeLabel('TelNo')); ?>:</b>
+	<?php echo CHtml::encode($data->TelNo); ?>
+	<br />
+
 	<b><?php echo CHtml::encode($data->getAttributeLabel('Terms')); ?>:</b>
 	<?php echo CHtml::encode($data->Terms); ?>
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('PayMode')); ?>:</b>
 	<?php echo CHtml::encode($data->PayMode); ?>
+	<br />
+
+    <b><?php echo CHtml::encode($data->getAttributeLabel('AcctOf1')); ?>:</b>
+	<?php echo CHtml::encode($data->AcctOf1); ?>
+	<br />
+
+    <b><?php echo CHtml::encode($data->getAttributeLabel('Instruction')); ?>:</b>
+	<?php echo CHtml::encode($data->Instruction); ?>
 	<br />
 
 	<?php /*

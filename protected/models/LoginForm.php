@@ -1,15 +1,47 @@
 <?php
 
 /**
+ * This is the model class for table "c_security".
+ *
+ * The followings are the available columns in table 'c_security':
+ * @property string $Emp_Code
+ * @property string $FirstName
+ * @property string $MI
+ * @property string $LastName
+ * @property string $Level
+ * @property string $Passwrd
+ * @property string $AcctName
+ * @property string $Bday
+ * @property string $LocalNo
+ * @property string $CellPhone
+ * @property string $Email
+ * @property string $TermsConditions
+ * @property string $Position
+ * @property integer $Resigned
+ * @property integer $PRFPLUS
+ * @property integer $Optimal
+ * @property integer $ServiceCtr
+ * @property integer $Unison
+ * @property integer $LogIn
+ * @property string $LastLog
+ * @property string $Sex
+ * @property string $religion
+ * @property string $citizenship
+ * @property string $civilstatus
+ * @property string $completeaddress
+ */
+ /**
  * LoginForm class.
  * LoginForm is the data structure for keeping
  * user login form data. It is used by the 'login' action of 'SiteController'.
  */
 class LoginForm extends CFormModel
 {
-	public $username;
-	public $password;
-	public $rememberMe;
+	
+	//public $rememberMe;
+
+    public $Emp_Code;
+    public $Passwrd;
 
 	private $_identity;
 
@@ -22,11 +54,11 @@ class LoginForm extends CFormModel
 	{
 		return array(
 			// username and password are required
-			array('username, password', 'required'),
+			array('Emp_Code, Passwrd', 'required'),
 			// rememberMe needs to be a boolean
-			array('rememberMe', 'boolean'),
+			#array('rememberMe', 'boolean'),
 			// password needs to be authenticated
-			array('password', 'authenticate'),
+			array('Passwrd', 'authenticate'),
 		);
 	}
 
@@ -36,7 +68,9 @@ class LoginForm extends CFormModel
 	public function attributeLabels()
 	{
 		return array(
-			'rememberMe'=>'Remember me next time',
+			//'rememberMe'=>'Remember me next time',
+			'Emp_Code'=>'Username',
+			'Passwrd'=>'Password',
 		);
 	}
 
@@ -45,12 +79,25 @@ class LoginForm extends CFormModel
 	 * This is the 'authenticate' validator as declared in rules().
 	 */
 	public function authenticate($attribute,$params)
-	{
-		if(!$this->hasErrors())
+	{	
+		if(!$this->hasErrors())  // we only want to authenticate when no input errors
 		{
-			$this->_identity=new UserIdentity($this->username,$this->password);
-			if(!$this->_identity->authenticate())
-				$this->addError('password','Incorrect username or password.');
+			$identity=new UserIdentity($this->Emp_Code,$this->Passwrd);
+			$identity->authenticate();
+			switch($identity->errorCode)
+			{
+				case UserIdentity::ERROR_NONE:
+					Yii::app()->user->login($identity);
+					return true;
+					break;
+				case UserIdentity::ERROR_USERNAME_INVALID:
+					$this->addError('Emp_Code','Email address is incorrect.');
+					break;
+				case  UserIdentity::ERROR_PASSWORD_INVALID:
+					Yii::app()->user->login($identity);
+					return true;
+					break;
+			}
 		}
 	}
 
@@ -62,16 +109,18 @@ class LoginForm extends CFormModel
 	{
 		if($this->_identity===null)
 		{
-			$this->_identity=new UserIdentity($this->username,$this->password);
+			$this->_identity=new UserIdentity($this->Emp_Code,$this->Passwrd);
 			$this->_identity->authenticate();
 		}
 		if($this->_identity->errorCode===UserIdentity::ERROR_NONE)
 		{
-			$duration=$this->rememberMe ? 3600*24*30 : 0; // 30 days
-			Yii::app()->user->login($this->_identity,$duration);
+			#$duration=$this->rememberMe ? 3600*24*30 : 0; // 30 days
+			Yii::app()->user->login($this->_identity);
 			return true;
 		}
 		else
+        {
 			return false;
+        }
 	}
 }

@@ -3,41 +3,7 @@
 /* @var $model Somain */
 /* @var $form CActiveForm */
 ?>
-<?php
 
-function getInitials($name){
-    //split name using spaces
-    $words=explode(" ",$name);
-    $inits='';
-    //loop through array extracting initial letters
-	foreach($words as $word){
-	    $inits.=strtoupper(substr($word,0,1));
-	}
-    return $inits;	
-}
-
-?>
-<?php
-function addItem(){
-    $form=$this->beginWidget('CActiveForm', array(
-	'id'=>'somain-form',
-	'enableAjaxValidation'=>false,
-)); ?>
-
-            <?php echo 'For Approval '.$form->checkBox($model,'ForApproval'); ?>
-			<?php echo $form->error($model,'ForApproval'); ?>
-        <br>
-			<?php echo 'If not your account, this is for: '.$form->textField($model,'AcctOf2',array('size'=>30,'maxlength'=>25)); ?>
-			<?php echo $form->error($model,'AcctOf2'); ?>
-        <br>
-			<?php echo 'Expected Date of Delivery '.$form->dateField($model,'DeliverDte',array('size'=>30,'maxlength'=>50)); ?>
-			<?php echo $form->error($model,'DeliverDte'); ?>
-        <br>
-    <?php $this->endWidget(); ?>
-<?php 
-}
-
-?>
 <div class="form">
 <?php $form=$this->beginWidget('CActiveForm', array(
 	'id'=>'somain-form',
@@ -121,11 +87,6 @@ function addItem(){
         <br>
 		</div>
 	</div>
-    
-  
-
-    
-
 	<div class="row buttons">
 		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
 	</div>
@@ -143,12 +104,14 @@ function addItem(){
 <div class="form1" id="vis">
     <h2>ADD ITEM(S) to <?php echo $dn; ?> <button id="cancel" style="float:right">Close</button></h2>
     <?php $form1=$this->beginWidget('CActiveForm', array('id'=>'so-detail-form','enableAjaxValidation'=>true, 'clientOptions' => array(
-                        'validateOnSubmit' => true)));?>  
+                            'validateOnType'=>false,
+        'validateOnSubmit'=>true,
+        'validateOnChange'=>false,)));?>  
     <?php $mod = new SoDetail; ?>   
         <div class="row">  
-            <?php echo 'Doc No.: '. $form->labelEx($mod,'DocNo',array('label'=>$dn)); ?>
-            <?php echo $form1->hiddenField($mod,'DocNo', array('value'=>$dn)); ?>
-            <?php echo $form1->error($mod,'DocNo'); ?>
+            <?php echo 'Doc No.: '. $form->labelEx($mod,'DocNo',array('label'=>$model->DocNo)); ?>
+            <?php echo $form1->hiddenField($mod,'DocNo', array('value'=>$model->DocNo)); ?>
+            <?php echo $form1->error($model,'DocNo'); ?>
         </div>
 
         <div class="column">

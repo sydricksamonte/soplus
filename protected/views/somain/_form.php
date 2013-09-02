@@ -221,8 +221,11 @@ function addItem(){
             <?php echo $form->error($model,'Classification'); ?>
         </div>
         <br>
-            <?php $name = (Yii::app()->user->firstname . ' ' . Yii::app()->user->lastname); ?>
-            <?php echo $form->hiddenField($model,'AcctOf1', array('value'=>getInitials($name))); ?>
+        
+            <?php ##########$name = (Yii::app()->user->firstname . ' ' . Yii::app()->user->lastname); ?>
+            <?php #echo $form->hiddenField($model,'AcctOf1', array('value'=>getInitials($name))); ?>
+            <?php echo $form->hiddenField($model,'AcctOf1', array('value'=>Yii::app()->user->getState('AcctName'))); ?>
+            <?php echo $form->hiddenField($model,'UserID', array('value'=>Yii::app()->user->id)); ?>
             <?php $dd = date('Y-m-d'); ?>
             <?php echo $form->hiddenField($model,'DatePlaced', array('value'=>date('Y-m-d H:i:s'))); ?>
         

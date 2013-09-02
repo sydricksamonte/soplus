@@ -10,7 +10,7 @@ $this->breadcrumbs=array(
 
 $this->menu=array(
 	array('label'=>'List Entries', 'url'=>array('index')),
-	array('label'=>'Create Entries', 'url'=>array('create')),
+	array('label'=>'Create Entry', 'url'=>array('create')),
 	array('label'=>'View Entries', 'url'=>array('view', 'id'=>$model->DocNo)),
 	array('label'=>'Manage Entries', 'url'=>array('admin')),
 );

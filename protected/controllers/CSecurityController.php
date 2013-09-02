@@ -1,6 +1,6 @@
 <?php
 
-class SomainController extends Controller
+class CSecurityController extends Controller
 {
 	/**
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -24,32 +24,16 @@ class SomainController extends Controller
 	 * This method is used by the 'accessControl' filter.
 	 * @return array access control rules
 	 */
-	public function getAcctNameOfUser($id)
-    {
-        $modSec = new CSecurity;
-        $modSec->getAcctNameOfUserInModel(Yii::app()->user->id);
-        #$this->set(compact('modSec'));
-        return $modSec;
-    }
-    public function accessRules()
+	public function accessRules()
 	{
-        $model = new Somain;
-        $userNow = $model->getUserOfSpecDocNo(Yii::app()->request->getParam('id'));
-        $modelProfile = new Profiles;
-        $profileUser = $modelProfile->findIdOfSpecEmpCode($userNow);
-  
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
 				'actions'=>array('index','view'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('admin','create'),
+				'actions'=>array('create','update'),
 				'users'=>array('@'),
-			),
-            array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('update'),
-				'users'=>array('syd'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
 				'actions'=>array('admin','delete'),
@@ -78,32 +62,26 @@ class SomainController extends Controller
 	 */
 	public function actionCreate()
 	{
-		$model =new Somain;
+		$model=new CSecurity;
+
 		// Uncomment the following line if AJAX validation is needed
-        $this->performAjaxValidation($model);
-      
-		if(isset($_POST['Somain']))
+		// $this->performAjaxValidation($model);
+
+		if(isset($_POST['CSecurity']))
 		{
-            
-			$model->attributes=$_POST['Somain'];
-            $count = $model->countAllDocNoPattern($model->DocNo);
-            $count1 = sprintf('%04d', $count); 
-            $newDocNo = $model->DocNo .'-'.$count1;
-            $model->setAttribute('DocNo',$newDocNo);
-			if($model->save()){
-			    $this->redirect(array('update','id'=>$model->DocNo));
-			}
-            else {
-                var_dump( $model->errors );
-            }
-				
+			$model->attributes=$_POST['CSecurity'];
+			if($model->save())
+				$this->redirect(array('view','id'=>$model->Emp_Code));
 		}
 
-        $this->layout = 'column2';
 		$this->render('create',array(
 			'model'=>$model,
 		));
+
+       
+
 	}
+    
 
 	/**
 	 * Updates a particular model.
@@ -112,33 +90,17 @@ class SomainController extends Controller
 	 */
 	public function actionUpdate($id)
 	{
-        $model=$this->loadModel($id);
-        $mod = new SoDetail;
-		// Uncomment the following line if AJAX validation is needed
-        $this->performAjaxValidation($mod);
-        if(isset($_POST['SoDetail']))
-		{
-			$mod->attributes=$_POST['SoDetail'];
-            if($mod->save())
-            { }
-            else {
-                var_dump( $mod->errors );
-            }
-		}
+		$model=$this->loadModel($id);
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['Somain']))
+		if(isset($_POST['CSecurity']))
 		{
-			$model->attributes=$_POST['Somain'];
-			if($model->save()){}
-				#$this->redirect(array('view','id'=>$model->DocNo));
-            else {
-                var_dump( $model->errors );
-            }
+			$model->attributes=$_POST['CSecurity'];
+			if($model->save())
+				$this->redirect(array('view','id'=>$model->Emp_Code));
 		}
-       
 
 		$this->render('update',array(
 			'model'=>$model,
@@ -164,7 +126,7 @@ class SomainController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('Somain');
+		$dataProvider=new CActiveDataProvider('CSecurity');
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
 		));
@@ -175,10 +137,10 @@ class SomainController extends Controller
 	 */
 	public function actionAdmin()
 	{
-		$model=new Somain('search');
+		$model=new CSecurity('search');
 		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['Somain']))
-			$model->attributes=$_GET['Somain'];
+		if(isset($_GET['CSecurity']))
+			$model->attributes=$_GET['CSecurity'];
 
 		$this->render('admin',array(
 			'model'=>$model,
@@ -189,12 +151,12 @@ class SomainController extends Controller
 	 * Returns the data model based on the primary key given in the GET variable.
 	 * If the data model is not found, an HTTP exception will be raised.
 	 * @param integer $id the ID of the model to be loaded
-	 * @return Somain the loaded model
+	 * @return CSecurity the loaded model
 	 * @throws CHttpException
 	 */
 	public function loadModel($id)
 	{
-		$model=Somain::model()->findByPk($id);
+		$model=CSecurity::model()->findByPk($id);
 		if($model===null)
 			throw new CHttpException(404,'The requested page does not exist.');
 		return $model;
@@ -202,16 +164,11 @@ class SomainController extends Controller
 
 	/**
 	 * Performs the AJAX validation.
-	 * @param Somain $model the model to be validated
+	 * @param CSecurity $model the model to be validated
 	 */
 	protected function performAjaxValidation($model)
 	{
-		if(isset($_POST['ajax']) && $_POST['ajax']==='somain-form')
-		{
-			echo CActiveForm::validate($model);
-			Yii::app()->end();
-		}
-        elseif (isset($_POST['ajax']) && $_POST['ajax']==='so-detail-form')
+		if(isset($_POST['ajax']) && $_POST['ajax']==='csecurity-form')
 		{
 			echo CActiveForm::validate($model);
 			Yii::app()->end();
