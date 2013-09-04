@@ -77,7 +77,7 @@ class Somain extends CActiveRecord
 		// will receive user inputs.
 		return array(
             array('Classification, DocNo', 'required'),
-			array('TelNo', 'numerical'),
+			#array('TelNo', 'numerical'),
 			array('DocNo, UserID, Approved, ApprovedBy, FANo', 'length', 'max'=>20),
 			array('Customer, ContactPerson', 'length', 'max'=>75),
 			array('Terms, PayMode', 'length', 'max'=>35),
@@ -261,11 +261,19 @@ class Somain extends CActiveRecord
                 );
                 return $this->createAbsoluteUrl($route, $params);
     }
-      public function getUserOfSpecDocNo($id)
+    public function getUserOfSpecDocNo($id)
 	{
 		$sql = "SELECT UserID FROM somain WHERE DocNo = '".$id."' LIMIT 1";
         $result = Yii::app()->db->createCommand($sql)->queryScalar();
         
+		return $result;
+	} 
+
+    public function getDetails($id)
+	{
+        
+        $sql = "SELECT * FROM somain WHERE DocNo = '".$id."' LIMIT 1";      
+        $result = Yii::app()->db->createCommand($sql)->queryAll();
 		return $result;
 	}
 }

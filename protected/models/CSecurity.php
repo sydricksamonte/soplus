@@ -170,10 +170,4 @@ class CSecurity extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
-    public function getAcctNameOfUserInModel($id)
-	{
-		$sql = "SELECT AcctName FROM c_security WHERE Emp_Code = '".$id."' LIMIT 1";
-        $result = Yii::app()->db->createCommand($sql)->queryScalar();
-		return $result;
-	}
 }

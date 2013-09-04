@@ -59,7 +59,7 @@ class SoDetail extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-            array('Qty, War_Parts, War_Labor, War_Onsite, DocNo, UnitMeas, ItemDesc,', 'required'),
+           # array('War_Parts, War_Labor, War_Onsite, DocNo, ItemDesc,', 'required'),
 			array('chngePrice, bold', 'numerical', 'integerOnly'=>true),
 			array('Qty, UnitPrice, FullComm', 'numerical'),
 			array('UnitMeas, InvoiceNo, Lexmark', 'length', 'max'=>10),
@@ -69,7 +69,7 @@ class SoDetail extends CActiveRecord
 			array('War_Parts, War_Labor, War_Onsite', 'length', 'max'=>40),
 			array('TransactionNo', 'length', 'max'=>5),
 			array('partNo', 'length', 'max'=>45),
-			#array('ItemDesc, InvoiceDte, PORemarks', 'safe'),
+			array('ItemDesc, Qty, PORemarks', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('DetailNo, DocNo, Qty, UnitMeas, ItemDesc, CurSign, UnitPrice, bold', 'safe', 'on'=>'search'),
@@ -84,6 +84,7 @@ class SoDetail extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+            'UnitMeas'=>array(self::HAS_MANY, 'Unit', 'name'),
 		);
 	}
 
@@ -172,5 +173,19 @@ class SoDetail extends CActiveRecord
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
+	}
+    public function getUserOfSpecDocNo($id)
+	{
+        $sql = "SELECT UserID FROM `somain` AS `m` INNER JOIN `so_detail` AS `d` ON m.DocNo = d.DocNo  WHERE d.DetailNo = '".$id."' LIMIT 1";      
+        $result = Yii::app()->db->createCommand($sql)->queryScalar();
+		return $result;
+	}
+    public function getDetails($id)
+	{
+        
+        $sql = "SELECT * FROM so_detail WHERE DocNo = '".$id."'";      
+        $result = Yii::app()->db->createCommand($sql)->queryAll();
+        #die(print_r($result));
+		return $result;
 	}
 }

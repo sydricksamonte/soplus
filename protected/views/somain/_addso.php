@@ -3,13 +3,30 @@
 /* @var $model Somain */
 /* @var $form CActiveForm */
 ?>
-
+<?php
+    foreach(Yii::app()->user->getFlashes() as $key => $message) {
+        echo '<div class="flash-' . $key . '">' . $message . "</div>\n";
+    }
+?>
+<style>
+    .con {
+        -webkit-border-radius: 10px;
+        -moz-border-radius: 10px;
+        -o-border-radius: 10px;
+        -ms-border-radius: 10px;
+        -khtml-border-radius: 10px;
+        border-radius: 10px;
+        padding-left: 10px;
+        background-color: #beeae9;
+        
+    }
+</style>
 <div class="form">
 <?php $form=$this->beginWidget('CActiveForm', array(
 	'id'=>'somain-form',
 	'enableAjaxValidation'=>false,
 )); ?>
-      <div style="border:1px solid green; width:25%;padding:2px; float:right; padding: 0 25px 25px 0;">
+      <div class="con" style="border:1px; width:25%;padding:2px; float:right;">
 		    <?php $dn = $model->DocNo; ?>
             <?php echo 'Doc No.: '.$form->labelEx($model,'DocNo',array('label'=>$model->DocNo)); ?>
             <?php echo $form->hiddenField($model,'DocNo', array('value'=>$model->DocNo)); ?>
@@ -61,13 +78,16 @@
 		    <?php echo $form->error($model,'AcctOf2'); ?>
         <br>
             -->
-            <?php echo 'For Approval '.$form->checkBox($model,'ForApproval'); ?>
+            
+            <?php if ($model->ForApproval == 1) {$ch=TRUE;} 
+                    else {$ch=FALSE;}
+            echo 'For Approval '.$form->checkBox($model,'ForApproval',array('disabled'=>$ch)); ?>
 			<?php echo $form->error($model,'ForApproval'); ?>
         <br>
 			<?php echo 'If not your account, this is for: '.$form->textField($model,'AcctOf2',array('size'=>30,'maxlength'=>25)); ?>
 			<?php echo $form->error($model,'AcctOf2'); ?>
         <br>
-			<?php echo 'Expected Date of Delivery '.$form->dateField($model,'DeliverDte',array('size'=>30,'maxlength'=>50)); ?>
+			<?php echo 'Expected Date of Delivery '.$form->textField($model,'DeliverDte',array('size'=>30,'maxlength'=>50)); ?>
 			<?php echo $form->error($model,'DeliverDte'); ?>
         <br>
 			<?php echo 'Period Covered '.$form->textField($model,'DRPeriod',array('size'=>30,'maxlength'=>50)); ?>
@@ -85,10 +105,13 @@
             <?php echo 'Deliver To(If different address) '.$form->textField($model,'DeliverTo',array('size'=>30,'maxlength'=>250)); ?>
 			<?php echo $form->error($model,'DeliverTo'); ?>
         <br>
-		</div>
+        </div>
 	</div>
-	<div class="row buttons">
-		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
+    <div class="row buttons"  >
+		<h1><?php echo CHtml::submitButton('Save', array('name' => 'Update','disabled'=>$ch)); ?>
+	    &nbsp;
+		<?php #echo CHtml::submitButton('Copy', array('name' => 'New', 'id'=>'Copy')); ?>
+        </h1>
 	</div>
 
 
@@ -97,10 +120,11 @@
 <!--                                     SO DETAIL                                      
 
 <?php echo CHtml::link('Add Item(s)','#', array('rel' => 'popuprel', 'class' => 'popup' )); ?>
+
     -->
-<button id="hides">Add Item</button>
-    
-    <?php #echo Yii::trace(CVarDumper::dumpAsString($model),'vardump');?>
+<button id="hides" <?php if ($ch == true){echo 'disabled';}?>>Add Item</button> 
+<button id="copy">Copy</button>
+<?php echo CHtml::link('Preview',array('somain/view', 'id'=>$model->DocNo)); ?>
 <div class="form1" id="vis">
     <h2>ADD ITEM(S) to <?php echo $dn; ?> <button id="cancel" style="float:right">Close</button></h2>
     <?php $form1=$this->beginWidget('CActiveForm', array('id'=>'so-detail-form','enableAjaxValidation'=>true, 'clientOptions' => array(
@@ -177,20 +201,30 @@
             <?php echo $form1->error($mod,'FullComm'); ?>
         </div>
         <div class="column buttons">
-            <?php echo CHtml::submitButton($mod->isNewRecord ? 'Create' : 'Save',array('id'=>'test')); ?>
+            <?php echo CHtml::submitButton('Save', array('name' => 'NewCopy')); ?></h1>
         </div> 
  
         <?php $this->endWidget(); ?>
      
-    </div><!-- form --> 
+    </div>
+
+
 <div id="fade"></div>
-<!-- form -->
-
-
 
 <div class="form2" id="vi">
-<?php $this->widget('zii.widgets.grid.CGridView', array(
+<?php 
+$templ = NULL;
+ if ($ch == TRUE)
+ {
+      $templ = null;
+ }
+ else
+ {
+     $templ =  '{update}{delete}{view}';
+ }
+ $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'so-detail-grid',
+    
 	'dataProvider'=>$mod->getAllRelDocNo($dn),
 	'filter'=>$mod,
 	'columns'=>array(
@@ -214,28 +248,134 @@
 		*/
 		array(
           'class'=>'CButtonColumn',
+          'template'=>$templ,
           'viewButtonUrl'=>'Yii::app()->createUrl(\'sodetail/view&id=\'. $data->DetailNo)',
           'updateButtonUrl'=>'Yii::app()->createUrl(\'sodetail/update&id=\'. $data->DetailNo)',
           'deleteButtonUrl'=>'Yii::app()->createUrl(\'sodetail/delete&id=\'. $data->DetailNo)',
         ),
 	),
 )); ?>
+    
+    <!--<?php $this->widget('ext.widgets.editableGrid.CEditableGridView', array(
+	'id'=>'so-detail-grid',
+	'dataProvider'=>$mod->getAllRelDocNo($dn),
+     'showQuickBar'=>'true', 
+    'quickCreateAction'=>'QuickCreate', // will be actionQuickCreate()
+	#'filter'=>$mod,
+	'columns'=>array(
+		'Qty',
+		array('header' => 'Unit Measurement', 'name' => 'UnitMeas', 'class' => 'ext.widgets.editableGrid.CEditableColumn'),
+		'ItemDesc',
+		'CurSign',
+        'UnitPrice',
+        'War_Parts',
+		'War_Labor',
+		'War_Onsite',
+		/*
+        'DetailNo',
+		'DocNo',
+		'InvoiceNo',
+		'InvoiceDte',
+		'PORemarks',	
+		'CommB',
+		'CommC',
+        'FullComm'
+		*/
+		array(
+          'class'=>'CButtonColumn',
+          'viewButtonUrl'=>'Yii::app()->createUrl(\'sodetail/view&id=\'. $data->DetailNo)',
+          'updateButtonUrl'=>'Yii::app()->createUrl(\'sodetail/update&id=\'. $data->DetailNo)',
+          'deleteButtonUrl'=>'Yii::app()->createUrl(\'sodetail/delete&id=\'. $data->DetailNo)',
+        ),
+	),
+)); ?>-->
 
 </div>
+
+<div class="formSelect" id="theForm">
+<h2>Select corresponding transaction type <button id="cancel2" style="float:right">Close</button></h2>  
+    <?php $form=$this->beginWidget('CActiveForm', array(
+	'id'=>'somain-form',
+    'htmlOptions' => array("name"=>"somain-form"),
+	'enableAjaxValidation'=>true, 
+    'clientOptions' => array('validateOnType'=>true,'validateOnSubmit'=>true,'validateOnChange'=>true)));?> 
+    <?php $model = new Somain; ?>    
+        <?php $dn = 'FA'.date('ym'); ?>
+        <div class="row">
+            <?php echo $form->labelEx($model,'Classification'); ?>
+            <?php
+                $records = Sotype::model()->findAll();
+                $data = array();
+                foreach ($records as $m)
+                $data[$m->soType] = $m->soType . ' - '. $m->soDescription;     
+                #$list1 = CHtml::listData($records, 'soType', $data);
+                echo $form->dropDownList($model,'Classification', $data, array('empty' => '(Select Type)'));
+            ?>
+            <?php echo $form->error($model,'Classification'); ?>
+        </div>
+        <br>
+        
+            <?php echo $form->hiddenField($model,'AcctOf1', array('value'=>Yii::app()->user->getState('AcctName'))); ?>
+            <?php echo $form->hiddenField($model,'UserID', array('value'=>Yii::app()->user->id)); ?>
+            <?php $dd = date('Y-m-d'); ?>
+            <?php echo $form->hiddenField($model,'DatePlaced', array('value'=>date('Y-m-d H:i:s'))); ?>
+        
+            <input type="checkbox" name="linkToBox" checked="checked" onClick="return checkValue()" /> <?php echo 'Use '.$dn. ' as Document No';?>
+            
+        <div id="xtraInfo" style="display:none;">
+            <?php echo 'Please define Doc No.: '; ?>
+            <p class="note">Enter YY (year) and MM (month). Please take note of the format - YYMM.</p>
+            <?php #$this->widget('CMaskedTextField',array('model'=>$model,'attribute'=>'DocNo','mask'=>'aa-9999','value'=>$dn,'htmlOptions'=>array('style'=>'width:80px;')));?>
+			<?php echo $form->textField($model,'DocNo',array('value'=> $dn)); ?>
+            <?php echo $form->error($model,'DocNo'); ?> 
+        </div>
+
+
+    <div class="row buttons">
+		<?php echo CHtml::submitButton('Copy', array('name' => 'New')); ?>
+	</div>
+
+     <?php $this->endWidget(); ?>
+
+</div>
+<script>
+    function checkValue()
+    {
+        var linkemail = document["somain-form"]["linkToBox"].checked
+        if (linkemail)
+        {
+            document.getElementById('xtraInfo').style.display = 'none';
+           
+        }
+        else
+        {
+            document.getElementById("xtraInfo").style.display = '';
+            document.getElementById("xtraInfo").focus();
+        }
+    }
+</script>
 <script>
     $(document).ready(function ()
     {
         $(".form1").hide();
-        
+       
         var friend = $('div').data('show');
         var friendDiv = $('#' + friend);
         $("#hides").click(function ()
         {
             $(".form1").fadeToggle('slow');
         });
+         $("#copy").click(function ()
+        {
+           $(".formSelect").fadeToggle('slow');
+        });
         $("#cancel").click(function ()
         {
             $(".form1").fadeToggle('slow');
+        });
+         $("#cancel2").click(function ()
+        {
+            $(".formSelect").fadeToggle('slow');
         });
        
     });

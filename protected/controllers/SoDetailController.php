@@ -19,6 +19,8 @@ class SoDetailController extends Controller
 		);
 	}
 
+    
+
 	/**
 	 * Specifies the access control rules.
 	 * This method is used by the 'accessControl' filter.
@@ -26,14 +28,20 @@ class SoDetailController extends Controller
 	 */
 	public function accessRules()
 	{
+        $model = new SoDetail;
+        $userNow = $model->getUserOfSpecDocNo(Yii::app()->request->getParam('id'));
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
+				'actions'=>array('index'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
+				'actions'=>array('create','QuickCreate','admin'),
 				'users'=>array('@'),
+			),
+             array('allow', // allow authenticated user to perform 'create' and 'update' actions
+				'actions'=>array('update','delete','view'),
+				'users'=>array($userNow),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
 				'actions'=>array('admin','delete'),
@@ -44,7 +52,21 @@ class SoDetailController extends Controller
 			),
 		);
 	}
-
+    public function actionQuickCreate() {
+     $mod=new SoDetail;
+      if(isset($_POST['SoDetail']))
+       {
+        $mod->attributes=$_POST['SoDetail'];
+        if($mod->save()){
+            $this->redirect(array('Somain/update','id'=>$mod->DocNo)); 
+        }
+        else
+        {
+            var_dump( $mod->errors );
+        }
+       # $this->redirect(array('admin')); //<-- assuming the Grid was used unter view admin/
+       }
+     }
 	/**
 	 * Displays a particular model.
 	 * @param integer $id the ID of the model to be displayed
@@ -55,6 +77,8 @@ class SoDetailController extends Controller
 			'model'=>$this->loadModel($id),
 		));
 	}
+
+  
 
 	/**
 	 * Creates a new model.
@@ -98,7 +122,7 @@ class SoDetailController extends Controller
 		{
 			$model->attributes=$_POST['SoDetail'];
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->DetailNo));
+				$this->redirect(array('Somain/update','id'=>$model->DocNo));
 		}
 
 		$this->render('update',array(

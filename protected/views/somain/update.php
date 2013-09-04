@@ -11,11 +11,11 @@ $this->breadcrumbs=array(
 $this->menu=array(
 	array('label'=>'List Entries', 'url'=>array('index')),
 	array('label'=>'Create Entry', 'url'=>array('create')),
-	array('label'=>'View Entries', 'url'=>array('view', 'id'=>$model->DocNo)),
 	array('label'=>'Manage Entries', 'url'=>array('admin')),
+    array('label'=>'Preview This Entry', 'url'=>array('view', 'id'=>$model->DocNo)),
 );
 ?>
 
-<h1>Update Entries <?php echo $model->DocNo; ?></h1>
+<h1>Update Entry <?php echo $model->DocNo; ?></h1>
 
 <?php echo $this->renderPartial('_addso', array('model'=>$model)); ?>

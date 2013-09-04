@@ -165,10 +165,4 @@ class Profiles extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
-    public function findIdOfSpecEmpCode($id)
-    {
-        $sql = "SELECT user_id FROM profiles WHERE Emp_Code = '".$id."' LIMIT 1";
-        $result = Yii::app()->db->createCommand($sql)->queryScalar();
-		return $result;
-    }
 }

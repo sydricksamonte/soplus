@@ -210,13 +210,16 @@ function addItem(){
     'clientOptions' => array(
                         'validateOnSubmit' => true)));?> 
     <?php $model = new Somain; ?>    
-        <?php $dn = 'FA-'.date('ym'); ?>
+        <?php $dn = 'FA'.date('ym'); ?>
         <div class="row">
             <?php echo $form->labelEx($model,'Classification'); ?>
             <?php
                 $records = Sotype::model()->findAll();
-                $list1 = CHtml::listData($records, 'soType', 'soDescription');
-                echo $form->dropDownList($model,'Classification', $list1, array('empty' => '(Select Type)'));
+                $data = array();
+                foreach ($records as $m)
+                $data[$m->soType] = $m->soType . ' - '. $m->soDescription;     
+                #$list1 = CHtml::listData($records, 'soType', $data);
+                echo $form->dropDownList($model,'Classification', $data, array('empty' => '(Select Type)'));
             ?>
             <?php echo $form->error($model,'Classification'); ?>
         </div>
@@ -270,7 +273,7 @@ function addItem(){
     $(document).ready(function ()
     {
         $(".form1").hide();
-         $(".formSelect").show();
+         $(".formSelect").fadeToggle('slow');
         var friend = $('div').data('show');
         var friendDiv = $('#' + friend);
         $("#hides").click(function ()
