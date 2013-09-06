@@ -113,7 +113,7 @@
     -->
 <button id="hides" <?php if ($ch == true){echo 'disabled';}?>>Add Item</button> 
 <button id="copy">Copy</button>
-<?php echo CHtml::link('Preview',array('somain/view', 'id'=>$model->DocNo)); ?>
+<?php #echo CHtml::link('Preview',array('somain/view', 'id'=>$model->DocNo)); ?>
 <div class="form1" id="vis">
     <h2>ADD ITEM(S) to <?php echo $dn; ?> <button id="cancel" style="float:right">Close</button></h2>
     <?php $form1=$this->beginWidget('CActiveForm', array('id'=>'so-detail-form','enableAjaxValidation'=>true, 'clientOptions' => array(

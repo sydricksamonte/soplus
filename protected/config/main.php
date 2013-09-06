@@ -133,8 +133,8 @@ return array(
             'username'         => 'root',
             'password'         => 'creative',
             'charset' => 'utf8',
-            'enableProfiling'=>true,
-            'enableParamLogging'=>true,
+           # 'enableProfiling'=>true,
+           # 'enableParamLogging'=>true,
             'class'            => 'CDbConnection'          // DO NOT FORGET THIS!
         ),
 		
@@ -146,8 +146,8 @@ return array(
 			'class'=>'CLogRouter',
 			'routes'=>array(
 				array(
-				#	'class'=>'CFileLogRoute',
-                    'class'=>'ext.yii-debug-toolbar-master.yii-debug-toolbar.YiiDebugToolbarRoute',
+					'class'=>'CFileLogRoute',
+                  #  'class'=>'ext.yii-debug-toolbar-master.yii-debug-toolbar.YiiDebugToolbarRoute',
 					'levels'=>'error, warning',
 				),
 				// uncomment the following to show log messages on web pages
