@@ -57,11 +57,11 @@
       <?php $this->widget('zii.widgets.CMenu',array('items'=>
 	  array(
           array('label'=>'Home', 'url'=>array('/site/index')), 
-		  array('label'=>'Brands', 'url'=>array('/detailbrand/admin'), 'visible'=>!Yii::app()->user->isGuest),
-		  array('label'=>'Data Entry', 'url'=>array('/sodetail/admin'), 'visible'=>!Yii::app()->user->isGuest),
-		  array('label'=>'SO Types', 'url'=>array('/tblsotype/admin'), 'visible'=>!Yii::app()->user->isGuest), 
-		  array('label'=>'Lastnum', 'url'=>array('/lastnum/admin'), 'visible'=>!Yii::app()->user->isGuest),
-		  array('label'=>'Lexmark Items', 'url'=>array('/lexmarkitems/admin'), 'visible'=>!Yii::app()->user->isGuest),
+		  #array('label'=>'Brands', 'url'=>array('/detailbrand/admin'), 'visible'=>!Yii::app()->user->isGuest),
+		  array('label'=>'Data Entry', 'url'=>array('/somain/admin'), 'visible'=>!Yii::app()->user->isGuest),
+		  array('label'=>'SO Types', 'url'=>array('/sotype/admin'), 'visible'=>!Yii::app()->user->isGuest), 
+		  #array('label'=>'Lastnum', 'url'=>array('/lastnum/admin'), 'visible'=>!Yii::app()->user->isGuest),
+		  #array('label'=>'Lexmark Items', 'url'=>array('/lexmarkitems/admin'), 'visible'=>!Yii::app()->user->isGuest),
           array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest),
         )
 	)); ?>

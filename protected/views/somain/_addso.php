@@ -8,25 +8,13 @@
         echo '<div class="flash-' . $key . '">' . $message . "</div>\n";
     }
 ?>
-<style>
-    .con {
-        -webkit-border-radius: 10px;
-        -moz-border-radius: 10px;
-        -o-border-radius: 10px;
-        -ms-border-radius: 10px;
-        -khtml-border-radius: 10px;
-        border-radius: 10px;
-        padding-left: 10px;
-        background-color: #beeae9;
-        
-    }
-</style>
+
 <div class="form">
 <?php $form=$this->beginWidget('CActiveForm', array(
 	'id'=>'somain-form',
 	'enableAjaxValidation'=>false,
 )); ?>
-      <div class="con" style="border:1px; width:25%;padding:2px; float:right;">
+      <div class="con" style="float:right; ">
 		    <?php $dn = $model->DocNo; ?>
             <?php echo 'Doc No.: '.$form->labelEx($model,'DocNo',array('label'=>$model->DocNo)); ?>
             <?php echo $form->hiddenField($model,'DocNo', array('value'=>$model->DocNo)); ?>
@@ -45,7 +33,7 @@
 			<?php echo $form->error($model,'DatePlaced'); ?>
 	</div>
     
-    <div style="border:1px solid green; width:55%;padding:2px;" align="right">
+    <div class="con"  style="width:380px;" align="right">
 		<div class="row">
 			<?php #echo $form->labelEx($model,'Customer'); ?>
 			<?php echo 'Customer: '.$form->textField($model,'Customer',array('size'=>30,'maxlength'=>75)); ?>
@@ -63,16 +51,17 @@
 			<?php echo 'Tel.No.: '.$form->textField($model,'TelNo',array('size'=>30,'maxlength'=>50)); ?>
 			<?php echo $form->error($model,'TelNo'); ?>
         <br>
-		</div>
-	</div>
-    <div class="row">
+        <div class="row">
 		<?php echo $form->labelEx($model,'Special Requirements/ Other Instructions'); ?>
 		<?php echo $form->textArea($model,'Instruction',array('rows'=>4, 'cols'=>40)); ?>
 		<?php echo $form->error($model,'Instruction'); ?>
+	    </div>
+		</div>
 	</div>
+    
     <br/>
     
-    <div style="border:1px solid green; width:324px;padding:2px;" align="right">
+    <div class="con" style="width:380px;" align="right">
 		<div class="row">
 		<!--    <?php echo 'Reason if Disapproved: '.$form->textField($model,'AcctOf2',array('size'=>30,'maxlength'=>200)); ?>
 		    <?php echo $form->error($model,'AcctOf2'); ?>

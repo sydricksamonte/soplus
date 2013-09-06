@@ -247,27 +247,28 @@ class Somain extends CActiveRecord
 	}
      public function createUrl($dataObject)
     {
-                // use security manager to encrypt 
-                $security = Yii::app()->getSecurityManager();
-                $encryptedProperty = $security->encrypt( $dataObject->property,  $user->someKey );
-                $utf8Property = utf8_encode($encryptedProperty);
-                $property = $utf8Property;
+        // use security manager to encrypt 
+        $security = Yii::app()->getSecurityManager();
+        $encryptedProperty = $security->encrypt( $dataObject->property,  $user->someKey );
+        $utf8Property = utf8_encode($encryptedProperty);
+        $property = $utf8Property;
                 
-                // build url
-                $route = implode(UserModule::module()->activateUrl);
-                $params = array(
-                        'property'=>$property,
-                        'someKey'=>$someKey,
-                );
-                return $this->createAbsoluteUrl($route, $params);
+        // build url
+        $route = implode(UserModule::module()->activateUrl);
+        $params = array(
+            'property'=>$property,
+            'someKey'=>$someKey,
+        );
+        return $this->createAbsoluteUrl($route, $params);
     }
+    
     public function getUserOfSpecDocNo($id)
 	{
 		$sql = "SELECT UserID FROM somain WHERE DocNo = '".$id."' LIMIT 1";
         $result = Yii::app()->db->createCommand($sql)->queryScalar();
-        
+
 		return $result;
-	} 
+	}
 
     public function getDetails($id)
 	{
@@ -275,5 +276,48 @@ class Somain extends CActiveRecord
         $sql = "SELECT * FROM somain WHERE DocNo = '".$id."' LIMIT 1";      
         $result = Yii::app()->db->createCommand($sql)->queryAll();
 		return $result;
+	}
+
+    public function fetchSalesToReport($type, $trans, $cus, $frm, $to)
+	{
+        $unis = 0;
+        $opt = 0;
+        $sc = 0;
+        if ($type == 'Optimal')
+        {
+            $unis = 0;
+            $opt = 1;
+            $sc = 0;
+        }
+        else if ($type == 'Unison')
+        {
+            $unis = 1;
+            $opt = 0;
+            $sc = 0;
+        }
+        else if ($type == 'Service_Center')
+        {
+            $unis = 0;
+            $opt = 0;
+            $sc = 1;
+        }
+        $pieces = explode(",", $trans);
+        $trans = implode("','",$pieces);
+        $trans = "'".$trans."'";
+        
+        $sql = "SELECT s.* , c.AcctName, CONCAT(c.LastName, ', ',c.FirstName) AS name 
+        FROM soplusdatafix.somain AS s 
+        INNER JOIN opp.c_security AS c
+        ON s.UserID = c.Emp_Code
+        WHERE s.Customer LIKE '%".$cus."%' 
+        AND s.Classification IN (".$trans.")
+        AND s.IssueDte BETWEEN  '".$frm."'  AND  '".$to."' 
+        AND c.Optimal = '".$opt."' 
+        AND c.ServiceCtr = '".$sc."' 
+        AND c.Unison = '".$unis."' 
+        ORDER BY c.LastName ASC"; 
+        $result = Yii::app()->db->createCommand($sql)->queryAll();
+        return $result;
+
 	}
 }

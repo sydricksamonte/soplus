@@ -91,11 +91,11 @@ class LoginForm extends CFormModel
 					return true;
 					break;
 				case UserIdentity::ERROR_USERNAME_INVALID:
-					$this->addError('Emp_Code','Email address is incorrect.');
+					$this->addError('Emp_Code','Username is incorrect.');
 					break;
 				case  UserIdentity::ERROR_PASSWORD_INVALID:
 					Yii::app()->user->login($identity);
-					return true;
+					$this->addError('Passwrd','Username or Password is incorrect.');
 					break;
 			}
 		}

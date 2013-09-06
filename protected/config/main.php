@@ -146,7 +146,7 @@ return array(
 			'class'=>'CLogRouter',
 			'routes'=>array(
 				array(
-					#'class'=>'CFileLogRoute',
+				#	'class'=>'CFileLogRoute',
                     'class'=>'ext.yii-debug-toolbar-master.yii-debug-toolbar.YiiDebugToolbarRoute',
 					'levels'=>'error, warning',
 				),

@@ -25,15 +25,29 @@ class SotypeController extends Controller
 	 * @return array access control rules
 	 */
 	public function accessRules()
-	{
+	{  
+        $model = new Somain;
+        $userNow = NULL;
+        $userAdmin = NULL;
+        
+        if (Yii::app()->user->getState('role') != 1)
+        {
+     
+            $userAdmin = Yii::app()->user->id;
+            
+        }
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
 				'actions'=>array('index','view','admin'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','admin'),
+				'actions'=>array('admin'),
 				'users'=>array('@'),
+			),
+            array('allow', // allow authenticated user to perform 'create' and 'update' actions
+				'actions'=>array('create','update','admin'),
+				'users'=>array($userAdmin),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
 				'actions'=>array('delete','admin'),

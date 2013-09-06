@@ -188,6 +188,19 @@ div.wide.form .buttons, div.wide.form .hint, div.wide.form .errorMessage
 	box-shadow: 0px 0px 20px #000;
     padding: 0 0 0 20px;
 }
+.con {
+        -webkit-border-radius: 10px;
+        -moz-border-radius: 10px;
+        -o-border-radius: 10px;
+        -ms-border-radius: 10px;
+        -khtml-border-radius: 10px;
+        border-radius: 10px;
+        padding: 10px;
+        background-color: #beeae9;
+        border:1px solid gray;
+        height: 230px;
+        
+}
 #fade { 
 	display: none; /* Hidden as default */
 	background: #000;

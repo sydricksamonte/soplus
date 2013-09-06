@@ -188,4 +188,19 @@ class SoDetail extends CActiveRecord
         #die(print_r($result));
 		return $result;
 	}
+
+    public function getSecDetails($id)
+	{
+        $sql = "SELECT CONCAT(LastName,', ',FirstName) FROM c_security WHERE AcctName = '".$id."'";      
+        $result = Yii::app()->dbadvert->createCommand($sql)->queryScalar();
+        #die(print_r($result));
+		return $result;
+	}
+    public function getFullName($id)
+	{
+        $sql = "SELECT CONCAT(FirstName,' ',LastName) FROM c_security WHERE Emp_Code = '".$id."'";      
+        $result = Yii::app()->dbadvert->createCommand($sql)->queryScalar();
+        #die(print_r($result));
+		return $result;
+	}
 }
