@@ -109,7 +109,7 @@ class SomainController extends Controller
 				AND `soplus`.`DocNo` < '".$docno."' ORDER BY `soplus`.`DocNo` DESC LIMIT 0,1";
 		}
 		else if($comm == 'firstr' && $type != 'all'){
-			$sql="SELECT * FROM `soplusdatafixyii`.`somain` soplus 
+			$sql="SELECT * FROM `soplusdatafix`.`somain` soplus 
 				INNER JOIN `opp`.`c_security` opp ON (`soplus`.`UserID`=`opp`.`Emp_Code`) 
 				WHERE `opp`.`PRFPLUS` = ".$prf." AND `opp`.`Optimal` = ".$opt." AND `opp`.`ServiceCtr` = ".$srv." 
 				AND `opp`.`Unison` = ".$uni." ORDER BY `soplus`.`DocNo` ASC LIMIT 0,1";

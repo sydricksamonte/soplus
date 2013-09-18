@@ -26,7 +26,7 @@ class UserIdentity extends CUserIdentity
 		$user = CSecurity::model()->findByAttributes(array('Emp_Code'=>$this->username));
 		if ($user===null) { // No user found!
 			$this->errorCode=self::ERROR_USERNAME_INVALID;
-		} else if ($user->Passwrd !== ($this->password) ) { // Invalid password!
+		} else if ( strtolower ($user->Passwrd) !==  strtolower ($this->password) ) { // Invalid password!
 			$this->errorCode=self::ERROR_PASSWORD_INVALID;
 		} else { // Okay!
 		    $this->errorCode=self::ERROR_NONE;
